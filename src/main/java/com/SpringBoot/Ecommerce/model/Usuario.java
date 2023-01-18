@@ -1,6 +1,15 @@
 package com.SpringBoot.Ecommerce.model;
 
+import jakarta.persistence.*;
+
+import java.util.List;
+
+
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String username;
@@ -13,18 +22,14 @@ public class Usuario {
     public Usuario() {
 
     }
+    @OneToMany(mappedBy = "usuario")
+    private List<Producto> productos;
 
-    public Usuario(Integer id, String name, String username, String email, String direccion, String telefono, String tipo, String password) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.tipo = tipo;
-        this.password = password;
-    }
+    @OneToMany(mappedBy = "usuario")
+    private List<Orden> ordenes;
+
+    @OneToOne
+    private DetalleOrden detalle;
 
     public Integer getId() {
         return id;
@@ -88,6 +93,30 @@ public class Usuario {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
+
+    public List<Orden> getOrdenes() {
+        return ordenes;
+    }
+
+    public void setOrdenes(List<Orden> ordenes) {
+        this.ordenes = ordenes;
+    }
+
+    public DetalleOrden getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(DetalleOrden detalle) {
+        this.detalle = detalle;
     }
 
     @Override
